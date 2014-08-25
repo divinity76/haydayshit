@@ -18,3 +18,7 @@ console.log('clicked '+i+' times!');
 
 
 })();
+// then refresh the page, and do again! repeat!
+//todo: do refresh & repeat automatically? xhr? iframe? 
+// todo: test the claims here http://www.howtofacebooktipstricks.com/2014/01/How-Send-Request-Facebook-Blocking.html ,
+// and if true, implement and automate?
