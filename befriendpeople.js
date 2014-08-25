@@ -4,11 +4,11 @@
 // https://www.facebook.com/browse/likes?id=722924617792108&actorid=297050457046195
 // then scroll to the bottom of the page..
 // then run this code
-(function ClickAllAddFriendsButtons($max/*=18*/){
+(function ClickAllAddFriendsButtons($max/*=14*/){
 var LikeButtons=document.querySelectorAll('.fbProfileBrowserListContainer')[0].querySelectorAll('.FriendRequestAdd');
 var LikeButton=null;
 var i=0;
-$max=($max==undefined? 18:$max);
+$max=($max==undefined? 14:$max);
 for(i=0;i<LikeButtons.length;++i)
 {
 LikeButtons.item(i).click();
