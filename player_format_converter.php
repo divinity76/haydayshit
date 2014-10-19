@@ -35,7 +35,7 @@ $geturl="http://graph.facebook.com/".$player["uid"]."/?fields=id,name,first_name
 $newplayer=json_decode(hhb_curl_exec($curlh,$geturl),true);
 if(array_key_exists("error",$newplayer)){
 if($newplayer["error"]["code"]!=4){
-echo "WARNING: UNKNOWN FACEBOOK ERROR!!! IGNORING ".$player["name"]." (uid ".$player["uid"]." )... url: ".$geturl;
+echo "WARNING: UNKNOWN FACEBOOK ERROR!!! IGNORING ".$player["name"]." (uid ".$player["uid"]." )... url: ".$geturl.PHP_EOL;
 var_dump($newplayer);
 break;
 }
