@@ -1,4 +1,6 @@
 <?php
+//WARNING: Hay Day changed from FQL to Facebook Graph API recently, this is no longer how Hay Day checks for friends!!
+// this method is outdated
 header("content-type: text/plain;charset=utf8");
 function hhb_curl_init($custom_options_array = array()) {
     if(empty($custom_options_array)){
