@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: text/plain; charset=utf-8");
 error_reporting(E_ALL);
+set_time_limit(0);
 set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
     // error was suppressed with the @-operator
     if (0 === error_reporting()) {
@@ -18,7 +19,9 @@ function convert_fql_format_to_graphapi_format($fql){
 $graphapi="";
 $old_players=json_decode($fql,true,15000,JSON_BIGINT_AS_STRING )['data'];
 $new_players=array();
-$curlh=hhb_curl_init();
+$curlh=hhb_curl_init(array(        CURLOPT_CONNECTTIMEOUT => 100,
+        CURLOPT_TIMEOUT => 110,//when torrenting, 10 seconds is not enough sometimes :o
+));
 foreach($old_players as $player){
 $newplayer=array();
 //$newplayer["id"]=$player["uid"];
@@ -27,7 +30,23 @@ $newplayer=array();
 ////< its a speed thing, as file_get_contents don't give a fuck about content-length, and will keep stalling until the connection is actually closed... i think..
 //// using curl or socket_create should be even faster ;)
 try{
-$newplayer=json_decode(hhb_curl_exec($curlh,"http://graph.facebook.com/".$player["uid"]."/?fields=id,name,first_name,gender,locale,username,picture"),true);
+while(true){
+$geturl="http://graph.facebook.com/".$player["uid"]."/?fields=id,name,first_name,gender,locale,username,picture";
+$newplayer=json_decode(hhb_curl_exec($curlh,$geturl),true);
+if(array_key_exists("error",$newplayer)){
+if($newplayer["error"]["code"]!=4){
+echo "WARNING: UNKNOWN FACEBOOK ERROR!!! IGNORING ".$player["name"]." (uid ".$player["uid"]." )... url: ".$geturl;
+var_dump($newplayer);
+break;
+}
+//fuck, we've been rate-limited... sleeping 5 seconds and trying again
+echo ",";
+sleep(5);
+continue;
+} else {
+break;
+}
+}
 }catch(ErrorException $ex){
 echo "Warning: could not get info on user ".$player["name"]." (uid ".$player["uid"]." )...".$ex->getMessage()."... ignoring!".PHP_EOL;
 continue;
@@ -38,6 +57,7 @@ $newplayer["installed"]=true;
 
 array_push($new_players,$newplayer);
 echo ".";
+sleep(1);//1 second should be sufficient to not get banned
 //http://graph.facebook.com/1406559129/?fields=id,name,first_name,gender,locale,username,picture
 /*
 old:
