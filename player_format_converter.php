@@ -90,6 +90,10 @@ new:
 echo PHP_EOL,PHP_EOL;
 $graphapi=array();
 $graphapi["data"]=$new_players;
+
+$graphapi["paging"]=array();
+$graphapi["paging"]["next"]="https://graph.facebook.com/v1.0/100000605585019/friends?fields=id,name,picture,first_name,gender,locale,username,installed&format=json&access_token=CAAEvsj2L4g8BAGXkKZAP0e04VjcPX99WachuToyskWSGniz3IgW48ZAB6rfn7VWuZBrZBFIALgMdfs5s5Ep0o1OLPJtoUXZCbdfWP4GEE9HzIEdMFuONb43Asyv6ZBxoYKgShZCU9b3Fgvqg9S8O0BRZAmozFpkJqBWfIVVNhyAi0LVs2ZAPIN8pYYIwoofI8GgZCUSnCqeskx0CXZCsIio44ifGZCyEZA577HxEaHZBxfbXpNZCoqg4ZBKz6clUrEqWWZB1OfJAjeSkLwluTawZDZD&limit=5000&offset=5000&__after_id=enc_AeznUiGDiOhWPHO1IruPYTKDa9Z90LC-5wpL_mqPnT5ozgrpak5AJ4p4JRNB9rroXBY5R921zyEqcbD0-DtcmC_m"
+//not sure what that's supposed to mean..TODO.
 $graphapi=json_encode($graphapi,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 return $graphapi;
 }
