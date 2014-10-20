@@ -88,7 +88,9 @@ new:
 */
 }
 echo PHP_EOL,PHP_EOL;
-$graphapi=json_encode($new_players,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+$graphapi=array();
+$graphapi["data"]=$new_players;
+$graphapi=json_encode($graphapi,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 return $graphapi;
 }
 
